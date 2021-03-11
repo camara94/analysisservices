@@ -1,0 +1,447 @@
+{
+  "name": "SemanticModel",
+  "compatibilityLevel": 1500,
+  "model": {
+    "culture": "fr-FR",
+    "dataSources": [
+      {
+        "type": "structured",
+        "name": "SQL/DESKTOP-MO6K1QN;PachadataFormationTabular",
+        "connectionDetails": {
+          "protocol": "tds",
+          "address": {
+            "server": "DESKTOP-MO6K1QN",
+            "database": "PachadataFormationTabular"
+          },
+          "authentication": null,
+          "query": null
+        },
+        "options": {},
+        "credential": {
+          "AuthenticationKind": "ServiceAccount",
+          "kind": "SQL",
+          "path": "desktop-mo6k1qn;PachadataFormationTabular",
+          "EncryptConnection": false
+        }
+      }
+    ],
+    "tables": [
+      {
+        "name": "Contact",
+        "columns": [
+          {
+            "name": "ContactId",
+            "dataType": "int64",
+            "sourceColumn": "ContactId"
+          },
+          {
+            "name": "Nom",
+            "dataType": "string",
+            "sourceColumn": "Nom"
+          },
+          {
+            "name": "Prenom",
+            "dataType": "string",
+            "sourceColumn": "Prenom"
+          },
+          {
+            "name": "Email",
+            "dataType": "string",
+            "sourceColumn": "Email"
+          },
+          {
+            "name": "Sexe",
+            "dataType": "string",
+            "sourceColumn": "Sexe"
+          },
+          {
+            "name": "Ville",
+            "dataType": "string",
+            "sourceColumn": "Ville"
+          },
+          {
+            "name": "CodeDepartement",
+            "dataType": "string",
+            "sourceColumn": "CodeDepartement"
+          },
+          {
+            "name": "NomDepartement",
+            "dataType": "string",
+            "sourceColumn": "NomDepartement"
+          },
+          {
+            "name": "CodePays",
+            "dataType": "string",
+            "sourceColumn": "CodePays"
+          },
+          {
+            "name": "NomPaysFrancais",
+            "dataType": "string",
+            "sourceColumn": "NomPaysFrancais"
+          },
+          {
+            "name": "NomPaysAnglais",
+            "dataType": "string",
+            "sourceColumn": "NomPaysAnglais"
+          },
+          {
+            "name": "SocieteId",
+            "dataType": "int64",
+            "sourceColumn": "SocieteId"
+          },
+          {
+            "name": "NomSociete",
+            "dataType": "string",
+            "sourceColumn": "NomSociete"
+          },
+          {
+            "type": "calculated",
+            "name": "Nom Complet",
+            "dataType": "string",
+            "isDataTypeInferred": true,
+            "expression": "Contact[Prenom] & \" \" & Contact[Nom]"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/DESKTOP-MO6K1QN;PachadataFormationTabular\",",
+                "    dbo_Contact = Source{[Schema=\"dbo\",Item=\"Contact\"]}[Data]",
+                "in",
+                "    dbo_Contact"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Inscription",
+        "columns": [
+          {
+            "name": "InscriptionId",
+            "dataType": "int64",
+            "sourceColumn": "InscriptionId"
+          },
+          {
+            "name": "SessionId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "SessionId"
+          },
+          {
+            "name": "DateSession",
+            "dataType": "dateTime",
+            "sourceColumn": "DateSession"
+          },
+          {
+            "name": "ContactId",
+            "dataType": "int64",
+            "isHidden": true,
+            "sourceColumn": "ContactId"
+          },
+          {
+            "name": "MontantHT",
+            "dataType": "double",
+            "sourceColumn": "MontantHT"
+          },
+          {
+            "name": "DateFacture",
+            "dataType": "dateTime",
+            "sourceColumn": "DateFacture"
+          },
+          {
+            "name": "ReferenceCommande",
+            "dataType": "string",
+            "sourceColumn": "ReferenceCommande"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/DESKTOP-MO6K1QN;PachadataFormationTabular\",",
+                "    dbo_Inscription = Source{[Schema=\"dbo\",Item=\"Inscription\"]}[Data]",
+                "in",
+                "    dbo_Inscription"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Compte_Inscription",
+            "expression": "COUNT(Inscription[InscriptionId])"
+          }
+        ]
+      },
+      {
+        "name": "Session",
+        "columns": [
+          {
+            "name": "SessionId",
+            "dataType": "int64",
+            "sourceColumn": "SessionId"
+          },
+          {
+            "name": "LangueLocal",
+            "dataType": "string",
+            "sourceColumn": "LangueLocal"
+          },
+          {
+            "name": "LangueFrancais",
+            "dataType": "string",
+            "sourceColumn": "LangueFrancais"
+          },
+          {
+            "name": "DateDebut",
+            "dataType": "dateTime",
+            "sourceColumn": "DateDebut"
+          },
+          {
+            "name": "Categorie",
+            "dataType": "string",
+            "sourceColumn": "Categorie"
+          },
+          {
+            "name": "Domaine",
+            "dataType": "string",
+            "sourceColumn": "Domaine"
+          },
+          {
+            "name": "Prix",
+            "dataType": "double",
+            "sourceColumn": "Prix"
+          },
+          {
+            "name": "note",
+            "dataType": "int64",
+            "sourceColumn": "note"
+          },
+          {
+            "name": "Duree",
+            "dataType": "int64",
+            "sourceColumn": "Duree"
+          },
+          {
+            "name": "FormateurId",
+            "dataType": "int64",
+            "sourceColumn": "FormateurId"
+          },
+          {
+            "name": "NomFormateur",
+            "dataType": "string",
+            "sourceColumn": "NomFormateur"
+          },
+          {
+            "name": "SocieteFormateurId",
+            "dataType": "int64",
+            "sourceColumn": "SocieteFormateurId"
+          },
+          {
+            "name": "NomSocieteFormateur",
+            "dataType": "string",
+            "sourceColumn": "NomSocieteFormateur"
+          },
+          {
+            "name": "NomVilleSocieteFormateur",
+            "dataType": "string",
+            "sourceColumn": "NomVilleSocieteFormateur"
+          },
+          {
+            "name": "NomSalleFormation",
+            "dataType": "string",
+            "sourceColumn": "NomSalleFormation"
+          },
+          {
+            "name": "NomLieuFormation",
+            "dataType": "string",
+            "sourceColumn": "NomLieuFormation"
+          },
+          {
+            "name": "NomVilleFormation",
+            "dataType": "string",
+            "sourceColumn": "NomVilleFormation"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/DESKTOP-MO6K1QN;PachadataFormationTabular\",",
+                "    dbo_Session = Source{[Schema=\"dbo\",Item=\"Session\"]}[Data]",
+                "in",
+                "    dbo_Session"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "Temps",
+        "dataCategory": "Time",
+        "columns": [
+          {
+            "name": "Jour",
+            "dataType": "dateTime",
+            "isKey": true,
+            "sourceColumn": "Jour"
+          },
+          {
+            "name": "NumeroMois",
+            "dataType": "int64",
+            "sourceColumn": "NumeroMois"
+          },
+          {
+            "name": "Annee",
+            "dataType": "int64",
+            "sourceColumn": "Annee"
+          },
+          {
+            "name": "NomMois",
+            "dataType": "string",
+            "sourceColumn": "NomMois"
+          },
+          {
+            "name": "NomJourSemaine",
+            "dataType": "string",
+            "sourceColumn": "NomJourSemaine"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/DESKTOP-MO6K1QN;PachadataFormationTabular\",",
+                "    dbo_Temps = Source{[Schema=\"dbo\",Item=\"Temps\"]}[Data]",
+                "in",
+                "    dbo_Temps"
+              ]
+            }
+          }
+        ],
+        "hierarchies": [
+          {
+            "name": "Dates",
+            "levels": [
+              {
+                "name": "Annee",
+                "ordinal": 0,
+                "column": "Annee"
+              },
+              {
+                "name": "NumeroMois",
+                "ordinal": 1,
+                "column": "NumeroMois"
+              },
+              {
+                "name": "Jour",
+                "ordinal": 2,
+                "column": "Jour"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "name": "Temps Facture",
+        "columns": [
+          {
+            "name": "Jour",
+            "dataType": "dateTime",
+            "sourceColumn": "Jour"
+          },
+          {
+            "name": "NumeroMois",
+            "dataType": "int64",
+            "sourceColumn": "NumeroMois"
+          },
+          {
+            "name": "Annee",
+            "dataType": "int64",
+            "sourceColumn": "Annee"
+          },
+          {
+            "name": "NomMois",
+            "dataType": "string",
+            "sourceColumn": "NomMois"
+          },
+          {
+            "name": "NomJourSemaine",
+            "dataType": "string",
+            "sourceColumn": "NomJourSemaine"
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Partition",
+            "dataView": "full",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = #\"SQL/DESKTOP-MO6K1QN;PachadataFormationTabular\",",
+                "    dbo_Temps = Source{[Schema=\"dbo\",Item=\"Temps\"]}[Data]",
+                "in",
+                "    dbo_Temps"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "relationships": [
+      {
+        "name": "f8d67d46-4855-4c7e-951f-b201105fa217",
+        "fromTable": "Inscription",
+        "fromColumn": "ContactId",
+        "toTable": "Contact",
+        "toColumn": "ContactId"
+      },
+      {
+        "name": "7e7d3b66-25ff-4071-87b6-2fd909113b5c",
+        "fromTable": "Inscription",
+        "fromColumn": "SessionId",
+        "toTable": "Session",
+        "toColumn": "SessionId"
+      },
+      {
+        "name": "4c421ac5-db65-43ad-80f4-22de38f5e528",
+        "fromTable": "Inscription",
+        "fromColumn": "DateSession",
+        "toTable": "Temps",
+        "toColumn": "Jour"
+      },
+      {
+        "name": "538d9c58-4da2-4896-9531-25c9314058a6",
+        "fromTable": "Inscription",
+        "fromColumn": "DateFacture",
+        "toTable": "Temps Facture",
+        "toColumn": "Jour"
+      }
+    ],
+    "annotations": [
+      {
+        "name": "ClientCompatibilityLevel",
+        "value": "600"
+      }
+    ]
+  },
+  "id": "SemanticModel"
+}
